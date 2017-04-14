@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Laws & Protected Areas Management</title>
+
+	<link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<h1>Overview</h1>
+
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_law">Add Law</button>
+		<a href="new_area.html"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_area">Add Protected area</button></a>
+		<a href="add_marker.html"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_area">Add Fishing Doc</button></a>	
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+				<br>
+					<h3>Laws</h3>
+				<br>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Country Code</th>
+							<th>Title</th>
+							<th>Body</th>
+						</tr>
+					</thead>
+					<tbody id="laws">
+						<!-- laws appended here -->
+					</tbody>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+				<br>
+					<h3>Protected Areas</h3>
+				<br>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Latitude</th>
+							<th>Longitude</th>
+							<th>Content</th>
+						</tr>
+					</thead>
+					<tbody id="areas">
+						<!-- areas appended here -->
+					</tbody>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+				<br>
+					<h3>Fishing docks</h3>
+				<br>
+
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Latitude</th>
+							<th>Longitude</th>
+							<th>Content</th>
+						</tr>
+					</thead>
+					<tbody id="docks">
+						<!-- docks appended here -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	<!-- Modal for New Law-->
+	<div class="modal fade" id="new_law" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Add a new Law</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form id="form_new_law" role="form">
+
+	        	<div class="form-group">
+	        		<label for="">Title</label>
+	        		<input type="text" class="form-control" id="title" placeholder="Title" required>
+	        	</div>
+
+	        	<div class="form-group">
+	        		<label for="">Body</label>
+	        		<textarea id="body" class="form-control" placeholder="Body" rows="3" required></textarea>
+
+	        	</div>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	<button type="submit" class="btn btn-primary">Save</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	</div>
+	
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			getlaws();
+			getAreas();
+			getDocks()
+
+			$("#form_new_law").submit(function(){
+				$.getJSON('http://ipinfo.io', function(data){
+					country_code = data.country;
+					title = $("#title").val();
+					body = $("#body").val();
+
+					// post data
+					postlaw(country_code, title, body);
+				});
+				return false;
+				location.reload();
+			});
+		});
+	</script>
+</body>
+</html>

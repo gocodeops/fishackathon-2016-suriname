@@ -1,0 +1,32 @@
+<ion-view view-title="Laws">
+
+  <ion-nav-buttons side="right">
+      <button class="button button-icon icon ion-ios-search" ng-click="searchshow()">
+      </button>
+   </ion-nav-buttons>
+
+  <ion-content padding="false">
+    <!-- <ion-header-bar class="bar-light bar-header">
+    </ion-header-bar> -->
+    <label ng-show="show" class="bar bar-header item item-input" style="margin: 0 !important;">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" placeholder="Search Keyword" id="search" data-list=".search_list" data-nodata="No results found" autocomplete="off">
+    </label>
+
+    <div class="list search_list">
+
+     <div ng-repeat="item in items" class="item item-text-wrap">
+      <div ng-class="isItemShown(item) ? 'item-expand active' : 'item-expand inactive'">
+        <h2>{{ item.title }}</h2>
+        <p ng-bind-html="item.body"></p>
+      </div>
+      <div ng-click="toggleItem(item)" class="item-expand-footer">
+        <i ng-class="isItemShown(item) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+        {{ isItemShown(item) ? 'Less' : 'More' }}
+      </div>
+    </div>
+
+  </div>
+
+  </ion-content>
+</ion-view>

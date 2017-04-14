@@ -1,0 +1,23 @@
+Main Route:
+http://192.168.8.103/fishackathon-2016/backend/index.php
+
+Area Management:
+/area/new/
+/area/getall/
+/area/getbyid/{id}
+/area/delete/
+/area/update/
+
+Marker Management:
+/marker/new/
+/marker/getall/
+/marker/getbyid/{id}
+/marker/delete/
+/marker/update/
+
+Law Management:
+/law/new/
+/law/getall/
+/law/getbyid/{id}
+/law/delete/
+/law/update/

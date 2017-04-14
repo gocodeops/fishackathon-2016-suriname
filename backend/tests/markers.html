@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRzTKDtxNY13q5Inw4gvDhHoy4CmNGD0s"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.1.min.js"></script>
+</head> 
+<body>
+  <div id="googleMap" style="width: 500px; height: 400px;"></div>
+
+  <script type="text/javascript">
+
+    $.get('http://192.168.8.103/fishackathon-2016/backend/index.php/marker/getall/', 
+      function(data){
+      data = jQuery.parseJSON(data);
+      var locations = [];
+
+      $.each(data, function(i, value){
+        marker_content = value.content;
+        marker_lat = value.lat;
+        marker_lng = value.lng;
+        locations.push([marker_content, marker_lat, marker_lng])
+      });
+      console.log(locations);
+
+      var map = new google.maps.Map(document.getElementById('googleMap'), {
+        zoom: 10,
+        center: new google.maps.LatLng(-39.92, 151.25),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      var infowindow = new google.maps.InfoWindow();
+      var marker, i;
+      var markers = new Array();
+      for (i = 0; i < locations.length; i++) { 
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+          map: map
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(locations[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+      }
+      function AutoCenter() {
+        //  Create a new viewpoint bound
+        var bounds = new google.maps.LatLngBounds();
+        //  Go through each...
+        $.each(markers, function (index, marker) {
+        bounds.extend(marker.position);
+        });
+        //  Fit these bounds to the map
+        map.fitBounds(bounds);
+      }
+      AutoCenter();
+    });
+  </script> 
+</body>
+</html>

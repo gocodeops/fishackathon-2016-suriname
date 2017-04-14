@@ -1,0 +1,13 @@
+<ion-view view-title="{{law}}">
+	<ion-nav-buttons side="right">
+	 	<label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search">
+	  </label>
+  </ion-nav-buttons>
+
+  <ion-content padding="false">
+		<p ng-bind-html="law"></p>
+		{{$law.title}}
+  </ion-content>
+</ion-view>
